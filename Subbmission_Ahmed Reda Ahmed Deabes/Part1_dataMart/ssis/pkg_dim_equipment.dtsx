@@ -1,0 +1,925 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/25/2026 7:26:42 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-02PDET2"
+  DTS:CreatorName="DESKTOP-02PDET2\dell"
+  DTS:DTSID="{0F6A98CA-F3F6-4B5C-96B6-DAD641DB6E6F}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="pkg_dim_equipment"
+  DTS:PackageType="5"
+  DTS:VersionBuild="25"
+  DTS:VersionGUID="{C242F576-93D7-4FDB-A9BB-C412EEA7E190}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4DF2D71B-9337-4DF6-A967-6160F264D8D7}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="BatchId">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT Load stgequipment"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{2967537A-E930-43A6-8967-EA4A284F57F3}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT Load stgequipment"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT Load stgequipment\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT Load stgequipment\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT Load stgequipment\Derived Column.Inputs[Derived Column Input].Columns[acquired_date]"
+                      cachedDataType="date"
+                      cachedName="acquired_date"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[acquired_date]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT Load stgequipment\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DFT Load stgequipment\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\Derived Column.Outputs[Derived Column Output].Columns[load_batch_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DFT Load stgequipment\Derived Column.Outputs[Derived Column Output].Columns[load_batch_id]"
+                      name="load_batch_id"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_I4)@[$Project::Batchid]</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_I4)@[$Project::Batchid]</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\Derived Column.Outputs[Derived Column Output].Columns[source_file]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="66"
+                      lineageId="Package\DFT Load stgequipment\Derived Column.Outputs[Derived Column Output].Columns[source_file]"
+                      name="source_file"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[$Project::SourceFilePath]</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[$Project::SourceFilePath]</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\Derived Column.Outputs[Derived Column Output].Columns[acquired_date_converted]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DFT Load stgequipment\Derived Column.Outputs[Derived Column Output].Columns[acquired_date_converted]"
+                      name="acquired_date_converted"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[ISNULL](#{Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[acquired_date]}) ? NULL(DT_DBDATE) : (DT_DBDATE)[DATEADD]("day",(DT_I4)#{Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[acquired_date]},(DT_DATE)"1899-12-30")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">ISNULL(acquired_date) ? NULL(DT_DBDATE) : (DT_DBDATE)DATEADD("day",(DT_I4)acquired_date,(DT_DATE)"1899-12-30")</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT Load stgequipment\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DFT Load stgequipment\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stgequipment\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stgequipment\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT Load stgequipment\Excel Source"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Excel Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Equipment$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT Load stgequipment\Excel Source.Connections[OleDbConnection]"
+                  connectionManagerID="{4F06202E-DA43-43CF-907F-141FE827A569}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[terminal_id]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].ExternalColumns[terminal_id]"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[terminal_id]"
+                      name="terminal_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[equipment_id]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].ExternalColumns[equipment_id]"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[equipment_id]"
+                      name="equipment_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[equipment_code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].ExternalColumns[equipment_code]"
+                      length="255"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[equipment_code]"
+                      name="equipment_code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[equipment_type]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].ExternalColumns[equipment_type]"
+                      length="255"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[equipment_type]"
+                      name="equipment_type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[capacity_tons]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].ExternalColumns[capacity_tons]"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[capacity_tons]"
+                      name="capacity_tons"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[acquired_date]"
+                      dataType="date"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].ExternalColumns[acquired_date]"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[acquired_date]"
+                      name="acquired_date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[status]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].ExternalColumns[status]"
+                      length="255"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[status]"
+                      name="status"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].ExternalColumns[terminal_id]"
+                      dataType="r8"
+                      name="terminal_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].ExternalColumns[equipment_id]"
+                      dataType="r8"
+                      name="equipment_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].ExternalColumns[equipment_code]"
+                      dataType="wstr"
+                      length="255"
+                      name="equipment_code" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].ExternalColumns[equipment_type]"
+                      dataType="wstr"
+                      length="255"
+                      name="equipment_type" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].ExternalColumns[capacity_tons]"
+                      dataType="r8"
+                      name="capacity_tons" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].ExternalColumns[acquired_date]"
+                      dataType="date"
+                      name="acquired_date" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].ExternalColumns[status]"
+                      dataType="wstr"
+                      length="255"
+                      name="status" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Error Output].Columns[equipment_id]"
+                      dataType="r8"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Error Output].Columns[equipment_id]"
+                      name="equipment_id" />
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Error Output].Columns[equipment_code]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Error Output].Columns[equipment_code]"
+                      name="equipment_code" />
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Error Output].Columns[equipment_type]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Error Output].Columns[equipment_type]"
+                      name="equipment_type" />
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Error Output].Columns[terminal_id]"
+                      dataType="r8"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Error Output].Columns[terminal_id]"
+                      name="terminal_id" />
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Error Output].Columns[capacity_tons]"
+                      dataType="r8"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Error Output].Columns[capacity_tons]"
+                      name="capacity_tons" />
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Error Output].Columns[acquired_date]"
+                      dataType="date"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Error Output].Columns[acquired_date]"
+                      name="acquired_date" />
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Error Output].Columns[status]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Error Output].Columns[status]"
+                      name="status" />
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT Load stgequipment\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[stg].[equipment]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">true</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT Load stgequipment\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{43AE403F-D165-4AC9-AED0-1DCACC08B22D}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[DESKTOP-02PDET2_SQL.PortOps_Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="RedirectRow"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[terminal_id]"
+                      cachedDataType="r8"
+                      cachedName="terminal_id"
+                      externalMetadataColumnId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[terminal_id]"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[terminal_id]" />
+                    <inputColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[load_batch_id]"
+                      cachedDataType="i4"
+                      cachedName="load_batch_id"
+                      externalMetadataColumnId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[load_batch_id]"
+                      lineageId="Package\DFT Load stgequipment\Derived Column.Outputs[Derived Column Output].Columns[load_batch_id]" />
+                    <inputColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[source_file]"
+                      cachedDataType="wstr"
+                      cachedLength="66"
+                      cachedName="source_file"
+                      externalMetadataColumnId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[source_file]"
+                      lineageId="Package\DFT Load stgequipment\Derived Column.Outputs[Derived Column Output].Columns[source_file]" />
+                    <inputColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[acquired_date_converted]"
+                      cachedDataType="dbDate"
+                      cachedName="acquired_date_converted"
+                      externalMetadataColumnId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[acquired_date]"
+                      lineageId="Package\DFT Load stgequipment\Derived Column.Outputs[Derived Column Output].Columns[acquired_date_converted]" />
+                    <inputColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[capacity_tons]"
+                      cachedDataType="r8"
+                      cachedName="capacity_tons"
+                      externalMetadataColumnId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[capacity_tons]"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[capacity_tons]" />
+                    <inputColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[equipment_type]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="equipment_type"
+                      externalMetadataColumnId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[equipment_type]"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[equipment_type]" />
+                    <inputColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[equipment_code]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="equipment_code"
+                      externalMetadataColumnId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[equipment_code]"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[equipment_code]" />
+                    <inputColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[equipment_id]"
+                      cachedDataType="r8"
+                      cachedName="equipment_id"
+                      externalMetadataColumnId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[equipment_id]"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[equipment_id]" />
+                    <inputColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[status]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="status"
+                      externalMetadataColumnId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[status]"
+                      lineageId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output].Columns[status]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[terminal_id]"
+                      dataType="wstr"
+                      length="50"
+                      name="terminal_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[load_batch_id]"
+                      dataType="i4"
+                      name="load_batch_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[load_timestamp]"
+                      dataType="dbTimeStamp2"
+                      name="load_timestamp"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[source_file]"
+                      dataType="wstr"
+                      length="500"
+                      name="source_file" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[is_valid]"
+                      dataType="bool"
+                      name="is_valid" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[validation_message]"
+                      dataType="wstr"
+                      length="1000"
+                      name="validation_message" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[stg_equipment_id]"
+                      dataType="i4"
+                      name="stg_equipment_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[equipment_id]"
+                      dataType="wstr"
+                      length="50"
+                      name="equipment_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[equipment_code]"
+                      dataType="wstr"
+                      length="50"
+                      name="equipment_code" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[equipment_type]"
+                      dataType="wstr"
+                      length="100"
+                      name="equipment_type" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[capacity_tons]"
+                      dataType="wstr"
+                      length="50"
+                      name="capacity_tons" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[acquired_date]"
+                      dataType="wstr"
+                      length="50"
+                      name="acquired_date" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[status]"
+                      dataType="wstr"
+                      length="50"
+                      name="status" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT Load stgequipment\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stgequipment\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT Load stgequipment\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stgequipment\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT Load stgequipment.Paths[Derived Column Output]"
+              endId="Package\DFT Load stgequipment\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\DFT Load stgequipment\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DFT Load stgequipment.Paths[Excel Source Output]"
+              endId="Package\DFT Load stgequipment\Derived Column.Inputs[Derived Column Input]"
+              name="Excel Source Output"
+              startId="Package\DFT Load stgequipment\Excel Source.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL MERGE stg to dim equipment"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{D55B5CF3-0533-407A-8CC3-5428B8790B4C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL MERGE stg to dim equipment"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{24343D4E-6962-4181-8603-9208F7302207}"
+          SQLTask:SqlStatementSource="MERGE PortOps_Mart.mart.dim_equipment AS tgt USING(SELECT        CAST(equipment_id AS INT) AS equipment_id, LTRIM(RTRIM(equipment_code)) AS equipment_code, LTRIM(RTRIM(equipment_type)) AS equipment_type, &#xA;                                                                                                                                                     CAST(terminal_id AS INT) AS terminal_id, CAST(capacity_tons AS DECIMAL(10, 2)) AS capacity_tons, &#xA;                                                                                                                                                     /* Convert Excel serial to DATE*/ CASE WHEN ISNUMERIC(acquired_date) = 1 THEN CAST(DATEADD(DAY, CAST(CAST(acquired_date AS FLOAT) AS INT) - 2, &#xA;                                                                                                                                                     CAST('1900-01-01' AS DATE)) AS DATE) WHEN TRY_CAST(acquired_date AS DATE) IS NOT NULL THEN CAST(acquired_date AS DATE) ELSE NULL END AS acquired_date, &#xA;                                                                                                                                                     LTRIM(RTRIM(ISNULL(status, 'Unknown'))) AS status&#xA;                                                                                                                            FROM            PortOps_Staging.stg.equipment&#xA;                                                                                                                            WHERE        is_valid = 1 AND equipment_id IS NOT NULL) AS src ON tgt.equipment_id = src.equipment_id WHEN MATCHED THEN&#xA;    UPDATE       &#xA;     SET                 tgt.equipment_code = src.equipment_code, tgt.equipment_type = src.equipment_type, tgt.terminal_id = src.terminal_id, tgt.capacity_tons = src.capacity_tons, tgt.acquired_date = src.acquired_date, tgt.status = src.status, &#xA;                              tgt.row_updated_at = SYSDATETIME() WHEN NOT MATCHED BY TARGET AND src.equipment_id &lt;&gt; - 1 THEN INSERT (equipment_id, equipment_code, equipment_type, terminal_id, capacity_tons, acquired_date, status)&#xA;     VALUES        (src.equipment_id, src.equipment_code, src.equipment_type, src.terminal_id, src.capacity_tons, src.acquired_date, src.status);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL Row count check"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{596E9828-3CE0-47DC-9A2F-4D6C2CB1043E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL Row count check"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{24343D4E-6962-4181-8603-9208F7302207}"
+          SQLTask:SqlStatementSource="DECLARE @stg_eq INT = (SELECT COUNT(*) FROM PortOps_Staging.stg.equipment WHERE is_valid = 1);&#xA;   DECLARE @mrt_eq INT = (SELECT COUNT(*) FROM PortOps_Mart.mart.dim_equipment WHERE equipment_id &lt;&gt; -1);&#xA;   IF @stg_eq &lt;&gt; @mrt_eq&#xA;       RAISERROR('Equipment row count mismatch: staging=%d  mart=%d', 16, 1, @stg_eq, @mrt_eq);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL Truncate stg equipment"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{5D17612E-B7C5-43A6-BB3E-0D26C8030781}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL Truncate stg equipment"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{43AE403F-D165-4AC9-AED0-1DCACC08B22D}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE stg.equipment;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{0C5B46CE-6A4E-4E81-B2E8-5C70DFD90468}"
+      DTS:From="Package\SQL Truncate stg equipment"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\DFT Load stgequipment" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{9B032DBE-3DCF-4303-9722-517EB3E132FA}"
+      DTS:From="Package\DFT Load stgequipment"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\SQL MERGE stg to dim equipment" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{B329ACAD-E0C0-4D2C-8598-1406ED4E3204}"
+      DTS:From="Package\SQL MERGE stg to dim equipment"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\SQL Row count check" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="235,42"
+          Id="Package\DFT Load stgequipment"
+          TopLeft="196,161" />
+        <NodeLayout
+          Size="230,42"
+          Id="Package\SQL MERGE stg to dim equipment"
+          TopLeft="176,267" />
+        <NodeLayout
+          Size="181,42"
+          Id="Package\SQL Row count check"
+          TopLeft="192,393" />
+        <NodeLayout
+          Size="233,42"
+          Id="Package\SQL Truncate stg equipment"
+          TopLeft="183,45" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="299.5,87">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="14,74"
+              Start="0,0"
+              End="14,66.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,33"
+                    Point2="0,37"
+                    Point3="4,37" />
+                  <mssgle:LineSegment
+                    End="10,37" />
+                  <mssgle:CubicBezierSegment
+                    Point1="10,37"
+                    Point2="14,37"
+                    Point3="14,41" />
+                  <mssgle:LineSegment
+                    End="14,66.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="313.5,203">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-22.5,64"
+              Start="0,0"
+              End="-22.5,56.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28"
+                    Point2="0,32"
+                    Point3="-4,32" />
+                  <mssgle:LineSegment
+                    End="-18.5,32" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-18.5,32"
+                    Point2="-22.5,32"
+                    Point3="-22.5,36" />
+                  <mssgle:LineSegment
+                    End="-22.5,56.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="291,309">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-8.5,84"
+              Start="0,0"
+              End="-8.5,76.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,38"
+                    Point2="0,42"
+                    Point3="-4,42" />
+                  <mssgle:LineSegment
+                    End="-4.5,42" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-4.5,42"
+                    Point2="-8.5,42"
+                    Point3="-8.5,46" />
+                  <mssgle:LineSegment
+                    End="-8.5,76.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DFT Load stgequipment">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="154,42"
+          Id="Package\DFT Load stgequipment\Derived Column"
+          TopLeft="247,215" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\DFT Load stgequipment\OLE DB Destination"
+          TopLeft="237,342" />
+        <NodeLayout
+          Size="257,51"
+          Id="Package\DFT Load stgequipment\Excel Source"
+          TopLeft="202.888888888889,92" />
+        <EdgeLayout
+          Id="Package\DFT Load stgequipment.Paths[Excel Source Output]"
+          TopLeft="327.694444444445,143">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,72"
+              Start="0,0"
+              End="0,64.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,64.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT Load stgequipment.Paths[Derived Column Output]"
+          TopLeft="323.25,257">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,85"
+              Start="0,0"
+              End="0,77.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,77.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT Load stgequipment\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT Load stgequipment\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,818 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/25/2026 7:26:42 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-02PDET2"
+  DTS:CreatorName="DESKTOP-02PDET2\dell"
+  DTS:DTSID="{4A16F3BA-5B61-45AC-A804-A3F2CDE5EE1D}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="pkg_dim_terminal"
+  DTS:PackageType="5"
+  DTS:VersionBuild="9"
+  DTS:VersionGUID="{CAB7E447-33DD-4400-83EA-A1F6BBFC0DE7}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{66111BD4-8CE5-454E-8F3A-159F1ECB570F}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="BatchId">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT Load stgterminals"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{02854AB3-A916-4C65-AA7C-EF387BD00015}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT Load stgterminals"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT Load stgterminals\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT Load stgterminals\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT Load stgterminals\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DFT Load stgterminals\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load stgterminals\Derived Column.Outputs[Derived Column Output].Columns[load_batch_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DFT Load stgterminals\Derived Column.Outputs[Derived Column Output].Columns[load_batch_id]"
+                      name="load_batch_id"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_I4)@[$Project::Batchid]</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_I4)@[$Project::Batchid]</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT Load stgterminals\Derived Column.Outputs[Derived Column Output].Columns[source_file]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="66"
+                      lineageId="Package\DFT Load stgterminals\Derived Column.Outputs[Derived Column Output].Columns[source_file]"
+                      name="source_file"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[$Project::SourceFilePath]</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[$Project::SourceFilePath]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT Load stgterminals\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DFT Load stgterminals\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load stgterminals\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stgterminals\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT Load stgterminals\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stgterminals\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT Load stgterminals\Excel Source"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Excel Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Terminals$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT Load stgterminals\Excel Source.Connections[OleDbConnection]"
+                  connectionManagerID="{4F06202E-DA43-43CF-907F-141FE827A569}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].Columns[terminal_id]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].ExternalColumns[terminal_id]"
+                      lineageId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].Columns[terminal_id]"
+                      name="terminal_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].Columns[terminal_code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].ExternalColumns[terminal_code]"
+                      length="255"
+                      lineageId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].Columns[terminal_code]"
+                      name="terminal_code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].Columns[terminal_name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].ExternalColumns[terminal_name]"
+                      length="255"
+                      lineageId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].Columns[terminal_name]"
+                      name="terminal_name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].Columns[zone]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].ExternalColumns[zone]"
+                      length="255"
+                      lineageId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].Columns[zone]"
+                      name="zone"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].Columns[terminal_type]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].ExternalColumns[terminal_type]"
+                      length="255"
+                      lineageId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].Columns[terminal_type]"
+                      name="terminal_type"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].ExternalColumns[terminal_id]"
+                      dataType="r8"
+                      name="terminal_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].ExternalColumns[terminal_code]"
+                      dataType="wstr"
+                      length="255"
+                      name="terminal_code" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].ExternalColumns[terminal_name]"
+                      dataType="wstr"
+                      length="255"
+                      name="terminal_name" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].ExternalColumns[zone]"
+                      dataType="wstr"
+                      length="255"
+                      name="zone" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].ExternalColumns[terminal_type]"
+                      dataType="wstr"
+                      length="255"
+                      name="terminal_type" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Error Output].Columns[terminal_id]"
+                      dataType="r8"
+                      lineageId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Error Output].Columns[terminal_id]"
+                      name="terminal_id" />
+                    <outputColumn
+                      refId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Error Output].Columns[terminal_code]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Error Output].Columns[terminal_code]"
+                      name="terminal_code" />
+                    <outputColumn
+                      refId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Error Output].Columns[terminal_name]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Error Output].Columns[terminal_name]"
+                      name="terminal_name" />
+                    <outputColumn
+                      refId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Error Output].Columns[zone]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Error Output].Columns[zone]"
+                      name="zone" />
+                    <outputColumn
+                      refId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Error Output].Columns[terminal_type]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Error Output].Columns[terminal_type]"
+                      name="terminal_type" />
+                    <outputColumn
+                      refId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT Load stgterminals\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[stg].[terminals]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT Load stgterminals\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{43AE403F-D165-4AC9-AED0-1DCACC08B22D}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[DESKTOP-02PDET2_SQL.PortOps_Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="RedirectRow"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[terminal_id]"
+                      cachedDataType="r8"
+                      cachedName="terminal_id"
+                      externalMetadataColumnId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[terminal_id]"
+                      lineageId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].Columns[terminal_id]" />
+                    <inputColumn
+                      refId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[terminal_code]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="terminal_code"
+                      externalMetadataColumnId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[terminal_code]"
+                      lineageId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].Columns[terminal_code]" />
+                    <inputColumn
+                      refId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[terminal_name]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="terminal_name"
+                      externalMetadataColumnId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[terminal_name]"
+                      lineageId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].Columns[terminal_name]" />
+                    <inputColumn
+                      refId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[zone]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="zone"
+                      externalMetadataColumnId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[zone]"
+                      lineageId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].Columns[zone]" />
+                    <inputColumn
+                      refId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[terminal_type]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="terminal_type"
+                      externalMetadataColumnId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[terminal_type]"
+                      lineageId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output].Columns[terminal_type]" />
+                    <inputColumn
+                      refId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[load_batch_id]"
+                      cachedDataType="i4"
+                      cachedName="load_batch_id"
+                      externalMetadataColumnId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[load_batch_id]"
+                      lineageId="Package\DFT Load stgterminals\Derived Column.Outputs[Derived Column Output].Columns[load_batch_id]" />
+                    <inputColumn
+                      refId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[source_file]"
+                      cachedDataType="wstr"
+                      cachedLength="66"
+                      cachedName="source_file"
+                      externalMetadataColumnId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[source_file]"
+                      lineageId="Package\DFT Load stgterminals\Derived Column.Outputs[Derived Column Output].Columns[source_file]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[stg_terminal_id]"
+                      dataType="i4"
+                      name="stg_terminal_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[terminal_id]"
+                      dataType="wstr"
+                      length="50"
+                      name="terminal_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[terminal_code]"
+                      dataType="wstr"
+                      length="20"
+                      name="terminal_code" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[terminal_name]"
+                      dataType="wstr"
+                      length="200"
+                      name="terminal_name" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[zone]"
+                      dataType="wstr"
+                      length="50"
+                      name="zone" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[terminal_type]"
+                      dataType="wstr"
+                      length="100"
+                      name="terminal_type" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[load_batch_id]"
+                      dataType="i4"
+                      name="load_batch_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[load_timestamp]"
+                      dataType="dbTimeStamp2"
+                      name="load_timestamp"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[source_file]"
+                      dataType="wstr"
+                      length="500"
+                      name="source_file" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[is_valid]"
+                      dataType="bool"
+                      name="is_valid" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[validation_message]"
+                      dataType="wstr"
+                      length="1000"
+                      name="validation_message" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT Load stgterminals\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load stgterminals\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stgterminals\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT Load stgterminals\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stgterminals\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT Load stgterminals.Paths[Derived Column Output]"
+              endId="Package\DFT Load stgterminals\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\DFT Load stgterminals\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DFT Load stgterminals.Paths[Excel Source Output]"
+              endId="Package\DFT Load stgterminals\Derived Column.Inputs[Derived Column Input]"
+              name="Excel Source Output"
+              startId="Package\DFT Load stgterminals\Excel Source.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL MERGE stg to dim_terminal"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{476A9BC6-E5BA-40BE-AD61-2F9D10AD8541}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL MERGE stg to dim_terminal"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{24343D4E-6962-4181-8603-9208F7302207}"
+          SQLTask:SqlStatementSource="-- ── STEP 3 : MERGE stg → mart (Type 1 upsert) ─────────────&#xA;MERGE PortOps_Mart.mart.dim_terminal  AS tgt&#xA;USING (&#xA;    SELECT&#xA;        CAST(terminal_id   AS INT)         AS terminal_id,&#xA;        LTRIM(RTRIM(terminal_code))        AS terminal_code,&#xA;        LTRIM(RTRIM(terminal_name))        AS terminal_name,&#xA;        LTRIM(RTRIM(zone))                 AS zone,&#xA;        LTRIM(RTRIM(terminal_type))        AS terminal_type&#xA;    FROM PortOps_Staging.stg.terminals&#xA;    WHERE is_valid = 1&#xA;      AND terminal_id IS NOT NULL&#xA;) AS src&#xA;ON tgt.terminal_id = src.terminal_id&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET&#xA;        tgt.terminal_code  = src.terminal_code,&#xA;        tgt.terminal_name  = src.terminal_name,&#xA;        tgt.zone           = src.zone,&#xA;        tgt.terminal_type  = src.terminal_type,&#xA;        tgt.row_updated_at = SYSDATETIME()&#xA;WHEN NOT MATCHED BY TARGET AND src.terminal_id &lt;&gt; -1 THEN&#xA;    INSERT (terminal_id, terminal_code, terminal_name, zone, terminal_type)&#xA;    VALUES (src.terminal_id, src.terminal_code, src.terminal_name,&#xA;            src.zone, src.terminal_type);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL Row count check"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9BC0B815-40D6-4C40-8CC5-732C221A844E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL Row count check"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{24343D4E-6962-4181-8603-9208F7302207}"
+          SQLTask:SqlStatementSource="DECLARE @stg_count INT = (SELECT COUNT(*) FROM PortOps_Staging.stg.terminals WHERE is_valid = 1);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL Truncate stg terminals"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{6A97E721-2223-471C-A4C4-B066B7649AC9}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL Truncate stg terminals"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{43AE403F-D165-4AC9-AED0-1DCACC08B22D}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE stg.terminals;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{8D2D4C93-6D35-4975-AA5F-8FF9206EF6DA}"
+      DTS:From="Package\SQL Truncate stg terminals"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\DFT Load stgterminals" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{0C92CA18-5BD8-433C-9AF7-89ED2D27DCEF}"
+      DTS:From="Package\DFT Load stgterminals"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\SQL MERGE stg to dim_terminal" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{A7A9049D-43B8-48CE-A6A0-10EF49AD0C21}"
+      DTS:From="Package\SQL MERGE stg to dim_terminal"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\SQL Row count check" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="207,42"
+          Id="Package\SQL Truncate stg terminals"
+          TopLeft="183,45" />
+        <NodeLayout
+          Size="185,42"
+          Id="Package\DFT Load stgterminals"
+          TopLeft="196,161" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="287.5,87">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,74"
+              Start="0,0"
+              End="0,66.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,66.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="230,42"
+          Id="Package\SQL MERGE stg to dim_terminal"
+          TopLeft="176,267" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="289.75,203">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,64"
+              Start="0,0"
+              End="0,56.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,56.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="181,42"
+          Id="Package\SQL Row count check"
+          TopLeft="192,393" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="291,309">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-8.5,84"
+              Start="0,0"
+              End="-8.5,76.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,38"
+                    Point2="0,42"
+                    Point3="-4,42" />
+                  <mssgle:LineSegment
+                    End="-4.5,42" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-4.5,42"
+                    Point2="-8.5,42"
+                    Point3="-8.5,46" />
+                  <mssgle:LineSegment
+                    End="-8.5,76.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DFT Load stgterminals">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="257,51"
+          Id="Package\DFT Load stgterminals\Excel Source"
+          TopLeft="202.888888888889,92" />
+        <NodeLayout
+          Size="154,42"
+          Id="Package\DFT Load stgterminals\Derived Column"
+          TopLeft="247,214" />
+        <EdgeLayout
+          Id="Package\DFT Load stgterminals.Paths[Excel Source Output]"
+          TopLeft="327.694444444444,143">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,71"
+              Start="0,0"
+              End="0,63.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,63.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="171,42"
+          Id="Package\DFT Load stgterminals\OLE DB Destination"
+          TopLeft="236,342" />
+        <EdgeLayout
+          Id="Package\DFT Load stgterminals.Paths[Derived Column Output]"
+          TopLeft="322.75,256">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,86"
+              Start="0,0"
+              End="0,78.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,78.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT Load stgterminals\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT Load stgterminals\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

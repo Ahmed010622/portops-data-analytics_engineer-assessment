@@ -1,0 +1,1715 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/25/2026 7:26:42 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-02PDET2"
+  DTS:CreatorName="DESKTOP-02PDET2\dell"
+  DTS:DTSID="{0420BD99-BD64-49C3-8B72-79AE6FC4722B}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="pkg_dim_customer"
+  DTS:PackageType="5"
+  DTS:VersionBuild="65"
+  DTS:VersionGUID="{443D0DD8-2F07-41FF-B406-34A32D9DE158}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="3"
+      DTS:DTSID="{28A02CD2-5D70-422A-A6A1-BD435E9049F6}"
+      DTS:ObjectName="RowCountNoChange"
+      DTS:Required="True">
+      <DTS:Property
+        DTS:DataType="3"
+        DTS:Name="ParameterValue">0</DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{17DBFB8B-7F16-4A22-9E69-7ACF09E8D6F7}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="BatchId">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4C021CAD-1314-4143-9321-6C25FFB702F1}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountNoChange">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT Load stg customer"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{D4D4C5B2-2F91-45F4-AF58-734D966B0144}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT Load stg customer"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT Load stg customer\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT Load stg customer\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT Load stg customer\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DFT Load stg customer\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\Derived Column.Outputs[Derived Column Output].Columns[load_batch_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DFT Load stg customer\Derived Column.Outputs[Derived Column Output].Columns[load_batch_id]"
+                      name="load_batch_id"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_I4)@[$Project::Batchid]</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_I4)@[$Project::Batchid]</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\Derived Column.Outputs[Derived Column Output].Columns[source_file]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="66"
+                      lineageId="Package\DFT Load stg customer\Derived Column.Outputs[Derived Column Output].Columns[source_file]"
+                      name="source_file"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[$Project::SourceFilePath]</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[$Project::SourceFilePath]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT Load stg customer\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DFT Load stg customer\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stg customer\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stg customer\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT Load stg customer\Excel Source"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Excel Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Customers$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT Load stg customer\Excel Source.Connections[OleDbConnection]"
+                  connectionManagerID="{4F06202E-DA43-43CF-907F-141FE827A569}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[customer_id]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].ExternalColumns[customer_id]"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[customer_id]"
+                      name="customer_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[customer_code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].ExternalColumns[customer_code]"
+                      length="255"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[customer_code]"
+                      name="customer_code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[customer_name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].ExternalColumns[customer_name]"
+                      length="255"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[customer_name]"
+                      name="customer_name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[country]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].ExternalColumns[country]"
+                      length="255"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[country]"
+                      name="country"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[customer_tier]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].ExternalColumns[customer_tier]"
+                      length="255"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[customer_tier]"
+                      name="customer_tier"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[credit_limit]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].ExternalColumns[credit_limit]"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[credit_limit]"
+                      name="credit_limit"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[active_flag]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].ExternalColumns[active_flag]"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[active_flag]"
+                      name="active_flag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[onboarded_date]"
+                      dataType="date"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].ExternalColumns[onboarded_date]"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[onboarded_date]"
+                      name="onboarded_date"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].ExternalColumns[customer_id]"
+                      dataType="r8"
+                      name="customer_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].ExternalColumns[customer_code]"
+                      dataType="wstr"
+                      length="255"
+                      name="customer_code" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].ExternalColumns[customer_name]"
+                      dataType="wstr"
+                      length="255"
+                      name="customer_name" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].ExternalColumns[country]"
+                      dataType="wstr"
+                      length="255"
+                      name="country" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].ExternalColumns[customer_tier]"
+                      dataType="wstr"
+                      length="255"
+                      name="customer_tier" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].ExternalColumns[credit_limit]"
+                      dataType="r8"
+                      name="credit_limit" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].ExternalColumns[active_flag]"
+                      dataType="r8"
+                      name="active_flag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].ExternalColumns[onboarded_date]"
+                      dataType="date"
+                      name="onboarded_date" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Error Output].Columns[customer_id]"
+                      dataType="r8"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Error Output].Columns[customer_id]"
+                      name="customer_id" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Error Output].Columns[customer_code]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Error Output].Columns[customer_code]"
+                      name="customer_code" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Error Output].Columns[customer_name]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Error Output].Columns[customer_name]"
+                      name="customer_name" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Error Output].Columns[country]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Error Output].Columns[country]"
+                      name="country" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Error Output].Columns[customer_tier]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Error Output].Columns[customer_tier]"
+                      name="customer_tier" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Error Output].Columns[credit_limit]"
+                      dataType="r8"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Error Output].Columns[credit_limit]"
+                      name="credit_limit" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Error Output].Columns[active_flag]"
+                      dataType="r8"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Error Output].Columns[active_flag]"
+                      name="active_flag" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Error Output].Columns[onboarded_date]"
+                      dataType="date"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Error Output].Columns[onboarded_date]"
+                      name="onboarded_date" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT Load stg customer\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[stg].[customers]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">true</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT Load stg customer\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{43AE403F-D165-4AC9-AED0-1DCACC08B22D}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[DESKTOP-02PDET2_SQL.PortOps_Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="RedirectRow"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[load_batch_id]"
+                      cachedDataType="i4"
+                      cachedName="load_batch_id"
+                      externalMetadataColumnId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[load_batch_id]"
+                      lineageId="Package\DFT Load stg customer\Derived Column.Outputs[Derived Column Output].Columns[load_batch_id]" />
+                    <inputColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[source_file]"
+                      cachedDataType="wstr"
+                      cachedLength="66"
+                      cachedName="source_file"
+                      externalMetadataColumnId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[source_file]"
+                      lineageId="Package\DFT Load stg customer\Derived Column.Outputs[Derived Column Output].Columns[source_file]" />
+                    <inputColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[customer_code]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="customer_code"
+                      externalMetadataColumnId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_code]"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[customer_code]" />
+                    <inputColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[customer_name]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="customer_name"
+                      externalMetadataColumnId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_name]"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[customer_name]" />
+                    <inputColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[customer_id]"
+                      cachedDataType="r8"
+                      cachedName="customer_id"
+                      externalMetadataColumnId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_id]"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[customer_id]" />
+                    <inputColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[country]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="country"
+                      externalMetadataColumnId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[country]"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[country]" />
+                    <inputColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[customer_tier]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="customer_tier"
+                      externalMetadataColumnId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_tier]"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[customer_tier]" />
+                    <inputColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[credit_limit]"
+                      cachedDataType="r8"
+                      cachedName="credit_limit"
+                      externalMetadataColumnId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[credit_limit]"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[credit_limit]" />
+                    <inputColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[active_flag]"
+                      cachedDataType="r8"
+                      cachedName="active_flag"
+                      externalMetadataColumnId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[active_flag]"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[active_flag]" />
+                    <inputColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[onboarded_date]"
+                      cachedDataType="date"
+                      cachedName="onboarded_date"
+                      externalMetadataColumnId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[onboarded_date]"
+                      lineageId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output].Columns[onboarded_date]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[load_batch_id]"
+                      dataType="i4"
+                      name="load_batch_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[load_timestamp]"
+                      dataType="dbTimeStamp2"
+                      name="load_timestamp"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[source_file]"
+                      dataType="wstr"
+                      length="500"
+                      name="source_file" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[is_valid]"
+                      dataType="bool"
+                      name="is_valid" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[validation_message]"
+                      dataType="wstr"
+                      length="1000"
+                      name="validation_message" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[stg_customer_id]"
+                      dataType="i4"
+                      name="stg_customer_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_id]"
+                      dataType="wstr"
+                      length="50"
+                      name="customer_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_code]"
+                      dataType="wstr"
+                      length="20"
+                      name="customer_code" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_name]"
+                      dataType="wstr"
+                      length="200"
+                      name="customer_name" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[country]"
+                      dataType="wstr"
+                      length="10"
+                      name="country" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_tier]"
+                      dataType="wstr"
+                      length="50"
+                      name="customer_tier" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[credit_limit]"
+                      dataType="wstr"
+                      length="50"
+                      name="credit_limit" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[active_flag]"
+                      dataType="wstr"
+                      length="10"
+                      name="active_flag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[onboarded_date]"
+                      dataType="wstr"
+                      length="50"
+                      name="onboarded_date" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT Load stg customer\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stg customer\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stg customer\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT Load stg customer.Paths[Derived Column Output]"
+              endId="Package\DFT Load stg customer\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\DFT Load stg customer\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DFT Load stg customer.Paths[Excel Source Output]"
+              endId="Package\DFT Load stg customer\Derived Column.Inputs[Derived Column Input]"
+              name="Excel Source Output"
+              startId="Package\DFT Load stg customer\Excel Source.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DFT Load stg customer history"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{723b689a-72e1-4f65-8037-0327ce80d7d7}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT Load stg customer history"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT Load stg customer history\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT Load stg customer history\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT Load stg customer history\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DFT Load stg customer history\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load stg customer history\Derived Column.Outputs[Derived Column Output].Columns[load_batch_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DFT Load stg customer history\Derived Column.Outputs[Derived Column Output].Columns[load_batch_id]"
+                      name="load_batch_id"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_I4)@[$Project::Batchid]</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_I4)@[$Project::Batchid]</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT Load stg customer history\Derived Column.Outputs[Derived Column Output].Columns[source_file]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="66"
+                      lineageId="Package\DFT Load stg customer history\Derived Column.Outputs[Derived Column Output].Columns[source_file]"
+                      name="source_file"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[$Project::SourceFilePath]</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[$Project::SourceFilePath]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT Load stg customer history\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DFT Load stg customer history\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load stg customer history\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stg customer history\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer history\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stg customer history\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT Load stg customer history\Excel Source"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Excel Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">CustomerHistory$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT Load stg customer history\Excel Source.Connections[OleDbConnection]"
+                  connectionManagerID="{4F06202E-DA43-43CF-907F-141FE827A569}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].Columns[customer_id]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].ExternalColumns[customer_id]"
+                      lineageId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].Columns[customer_id]"
+                      name="customer_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].Columns[customer_tier]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].ExternalColumns[customer_tier]"
+                      length="255"
+                      lineageId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].Columns[customer_tier]"
+                      name="customer_tier"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].Columns[credit_limit]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].ExternalColumns[credit_limit]"
+                      lineageId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].Columns[credit_limit]"
+                      name="credit_limit"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].Columns[effective_from]"
+                      dataType="date"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].ExternalColumns[effective_from]"
+                      lineageId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].Columns[effective_from]"
+                      name="effective_from"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].Columns[effective_to]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].ExternalColumns[effective_to]"
+                      length="255"
+                      lineageId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].Columns[effective_to]"
+                      name="effective_to"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].Columns[change_reason]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].ExternalColumns[change_reason]"
+                      length="255"
+                      lineageId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].Columns[change_reason]"
+                      name="change_reason"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].ExternalColumns[customer_id]"
+                      dataType="r8"
+                      name="customer_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].ExternalColumns[customer_tier]"
+                      dataType="wstr"
+                      length="255"
+                      name="customer_tier" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].ExternalColumns[credit_limit]"
+                      dataType="r8"
+                      name="credit_limit" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].ExternalColumns[effective_from]"
+                      dataType="date"
+                      name="effective_from" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].ExternalColumns[effective_to]"
+                      dataType="wstr"
+                      length="255"
+                      name="effective_to" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].ExternalColumns[change_reason]"
+                      dataType="wstr"
+                      length="255"
+                      name="change_reason" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Error Output].Columns[customer_id]"
+                      dataType="r8"
+                      lineageId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Error Output].Columns[customer_id]"
+                      name="customer_id" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Error Output].Columns[effective_from]"
+                      dataType="date"
+                      lineageId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Error Output].Columns[effective_from]"
+                      name="effective_from" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Error Output].Columns[effective_to]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Error Output].Columns[effective_to]"
+                      name="effective_to" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Error Output].Columns[customer_tier]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Error Output].Columns[customer_tier]"
+                      name="customer_tier" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Error Output].Columns[credit_limit]"
+                      dataType="r8"
+                      lineageId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Error Output].Columns[credit_limit]"
+                      name="credit_limit" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Error Output].Columns[change_reason]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Error Output].Columns[change_reason]"
+                      name="change_reason" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT Load stg customer history\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[stg].[customer_history]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">true</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT Load stg customer history\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{43AE403F-D165-4AC9-AED0-1DCACC08B22D}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[DESKTOP-02PDET2_SQL.PortOps_Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="RedirectRow"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[load_batch_id]"
+                      cachedDataType="i4"
+                      cachedName="load_batch_id"
+                      externalMetadataColumnId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[load_batch_id]"
+                      lineageId="Package\DFT Load stg customer history\Derived Column.Outputs[Derived Column Output].Columns[load_batch_id]" />
+                    <inputColumn
+                      refId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[source_file]"
+                      cachedDataType="wstr"
+                      cachedLength="66"
+                      cachedName="source_file"
+                      externalMetadataColumnId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[source_file]"
+                      lineageId="Package\DFT Load stg customer history\Derived Column.Outputs[Derived Column Output].Columns[source_file]" />
+                    <inputColumn
+                      refId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[customer_id]"
+                      cachedDataType="r8"
+                      cachedName="customer_id"
+                      externalMetadataColumnId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_id]"
+                      lineageId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].Columns[customer_id]" />
+                    <inputColumn
+                      refId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[effective_to]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="effective_to"
+                      externalMetadataColumnId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[effective_to]"
+                      lineageId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].Columns[effective_to]" />
+                    <inputColumn
+                      refId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[customer_tier]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="customer_tier"
+                      externalMetadataColumnId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_tier]"
+                      lineageId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].Columns[customer_tier]" />
+                    <inputColumn
+                      refId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[credit_limit]"
+                      cachedDataType="r8"
+                      cachedName="credit_limit"
+                      externalMetadataColumnId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[credit_limit]"
+                      lineageId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].Columns[credit_limit]" />
+                    <inputColumn
+                      refId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[effective_from]"
+                      cachedDataType="date"
+                      cachedName="effective_from"
+                      externalMetadataColumnId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[effective_from]"
+                      lineageId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].Columns[effective_from]" />
+                    <inputColumn
+                      refId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[change_reason]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="change_reason"
+                      externalMetadataColumnId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[change_reason]"
+                      lineageId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output].Columns[change_reason]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[load_batch_id]"
+                      dataType="i4"
+                      name="load_batch_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[load_timestamp]"
+                      dataType="dbTimeStamp2"
+                      name="load_timestamp"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[source_file]"
+                      dataType="wstr"
+                      length="500"
+                      name="source_file" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[is_valid]"
+                      dataType="bool"
+                      name="is_valid" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[validation_message]"
+                      dataType="wstr"
+                      length="1000"
+                      name="validation_message" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[stg_history_id]"
+                      dataType="i4"
+                      name="stg_history_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_id]"
+                      dataType="wstr"
+                      length="50"
+                      name="customer_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[effective_from]"
+                      dataType="wstr"
+                      length="50"
+                      name="effective_from" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[effective_to]"
+                      dataType="wstr"
+                      length="50"
+                      name="effective_to" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_tier]"
+                      dataType="wstr"
+                      length="50"
+                      name="customer_tier" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[credit_limit]"
+                      dataType="wstr"
+                      length="50"
+                      name="credit_limit" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[change_reason]"
+                      dataType="wstr"
+                      length="200"
+                      name="change_reason" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT Load stg customer history\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load stg customer history\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stg customer history\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT Load stg customer history\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load stg customer history\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT Load stg customer history.Paths[Derived Column Output]"
+              endId="Package\DFT Load stg customer history\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\DFT Load stg customer history\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DFT Load stg customer history.Paths[Excel Source Output]"
+              endId="Package\DFT Load stg customer history\Derived Column.Inputs[Derived Column Input]"
+              name="Excel Source Output"
+              startId="Package\DFT Load stg customer history\Excel Source.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL  Truncate stg customers and stg customer history"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{8130E03D-04CB-46F9-A9B3-20017C248F71}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL  Truncate stg customers and stg customer history"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{43AE403F-D165-4AC9-AED0-1DCACC08B22D}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE stg.customers;&#xA;  &#xA;TRUNCATE TABLE stg.customer_history;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL - Apply Type 1 overwrites"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9BB74528-2449-47B9-95D4-61EB40BBAE36}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL - Apply Type 1 overwrites"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{24343D4E-6962-4181-8603-9208F7302207}"
+          SQLTask:SqlStatementSource="UPDATE d&#xA;SET&#xA;    d.customer_code    = s.customer_code,&#xA;    d.customer_name    = s.customer_name,&#xA;    d.country          = s.country,&#xA;    d.active_flag      = s.active_flag,&#xA;    d.row_updated_at   = SYSDATETIME()&#xA;FROM PortOps_Mart.mart.dim_customer d&#xA;JOIN (&#xA;    SELECT&#xA;        CAST(customer_id AS INT)            AS customer_id,&#xA;        LTRIM(RTRIM(customer_code))         AS customer_code,&#xA;        LTRIM(RTRIM(customer_name))         AS customer_name,&#xA;        LTRIM(RTRIM(country))               AS country,&#xA;        CAST(active_flag AS BIT)            AS active_flag&#xA;    FROM PortOps_Staging.stg.customers&#xA;    WHERE is_valid = 1&#xA;) s ON d.customer_id = s.customer_id&#xA;WHERE d.customer_id &lt;&gt; -1;   -- never touch the Unknown member&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL Insert dim_customer direct"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{c2fd0687-0521-4890-af20-34fdafa8344a}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL Insert dim_customer direct"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{24343D4E-6962-4181-8603-9208F7302207}"
+          SQLTask:SqlStatementSource="-- INSERT all customer history rows directly into dim_customer&#xA;INSERT INTO mart.dim_customer&#xA;(&#xA;    customer_id, customer_code, customer_name, country, active_flag,&#xA;    customer_tier, credit_limit, effective_from, effective_to,&#xA;    is_current, change_reason&#xA;)&#xA;SELECT&#xA;    CAST(h.customer_id AS INT),&#xA;    LTRIM(RTRIM(c.customer_code)),&#xA;    LTRIM(RTRIM(c.customer_name)),&#xA;    LTRIM(RTRIM(ISNULL(c.country, 'XX'))),&#xA;&#xA;    CASE&#xA;        WHEN LOWER(LTRIM(RTRIM(ISNULL(c.active_flag,'1'))))&#xA;             IN ('1','true','yes') THEN CAST(1 AS BIT)&#xA;        ELSE CAST(0 AS BIT)&#xA;    END,&#xA;&#xA;    LTRIM(RTRIM(h.customer_tier)),&#xA;    TRY_CAST(h.credit_limit AS DECIMAL(18,2)),&#xA;&#xA;    CASE&#xA;        WHEN ISNUMERIC(h.effective_from) = 1&#xA;        THEN CAST(DATEADD(DAY,&#xA;                 CAST(CAST(h.effective_from AS FLOAT) AS INT) - 2,&#xA;                 CAST('1900-01-01' AS DATE)) AS DATE)&#xA;        ELSE TRY_CAST(h.effective_from AS DATE)&#xA;    END,&#xA;&#xA;    CASE&#xA;        WHEN h.effective_to = '9999-12-31' THEN CAST('9999-12-31' AS DATE)&#xA;        WHEN ISNUMERIC(h.effective_to) = 1&#xA;        THEN CAST(DATEADD(DAY,&#xA;                 CAST(CAST(h.effective_to AS FLOAT) AS INT) - 2,&#xA;                 CAST('1900-01-01' AS DATE)) AS DATE)&#xA;        ELSE TRY_CAST(h.effective_to AS DATE)&#xA;    END,&#xA;&#xA;    CASE WHEN h.effective_to = '9999-12-31' THEN 1 ELSE 0 END,&#xA;&#xA;    LTRIM(RTRIM(ISNULL(h.change_reason, '')))&#xA;&#xA;FROM PortOps_Staging.stg.customer_history h&#xA;JOIN PortOps_Staging.stg.customers c&#xA;  ON LTRIM(RTRIM(c.customer_id)) = LTRIM(RTRIM(h.customer_id))&#xA;WHERE h.is_valid = 1&#xA;  AND c.is_valid = 1;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL Row count and sanity check"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{4C71254C-0AC4-45CB-9497-C77B8D519A8D}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL Row count and sanity check"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{43AE403F-D165-4AC9-AED0-1DCACC08B22D}"
+          SQLTask:SqlStatementSource="SELECT&#xA;    (SELECT COUNT(*) &#xA;     FROM PortOps_Staging.stg.vw_customer_scd_source) AS src_cnt,&#xA;     &#xA;    (SELECT COUNT(*) &#xA;     FROM PortOps_Mart.mart.dim_customer &#xA;     WHERE customer_id &lt;&gt; -1) AS mart_cnt;&#xA;SELECT 1 AS has_error&#xA;WHERE EXISTS (&#xA;    SELECT customer_id&#xA;    FROM PortOps_Mart.mart.dim_customer&#xA;    WHERE customer_id &lt;&gt; -1&#xA;    GROUP BY customer_id&#xA;    HAVING SUM(CAST(is_current AS INT)) &lt;&gt; 1&#xA;);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL Validate staging"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{BE2172E4-D51F-42A6-BE6F-9D5F6B8E01D8}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL Validate staging"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{43AE403F-D165-4AC9-AED0-1DCACC08B22D}"
+          SQLTask:SqlStatementSource="UPDATE PortOps_Staging.stg.customer_history&#xA;     SET    is_valid = 0, validation_message = 'effective_from is NULL or unparseable'&#xA;     WHERE  TRY_CAST(effective_from AS DATE) IS NULL AND ISNUMERIC(effective_from) = 0;&#xA;&#xA;     UPDATE PortOps_Staging.stg.customer_history&#xA;     SET    is_valid = 0, validation_message = 'customer_id has no match in stg.customers'&#xA;     WHERE  CAST(customer_id AS INT) NOT IN (&#xA;                SELECT CAST(customer_id AS INT) FROM PortOps_Staging.stg.customers);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{4C52AE9D-19FD-4F6B-9805-D00BCC6DEAE3}"
+      DTS:From="Package\SQL  Truncate stg customers and stg customer history"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\DFT Load stg customer" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{5082F646-B256-427D-B20A-77C66F7FE98A}"
+      DTS:From="Package\SQL Validate staging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\SQL Insert dim_customer direct" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{B3CCF53F-90A5-4FA4-A543-B72EB39E9408}"
+      DTS:From="Package\DFT Load stg customer"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\DFT Load stg customer history" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{FD0B88E7-DE06-4746-BB2F-84B4BF0BB1B7}"
+      DTS:From="Package\DFT Load stg customer history"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\SQL Validate staging" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{C8EF8EF6-8A6F-45C6-B562-0BDC1606C29B}"
+      DTS:From="Package\SQL Insert dim_customer direct"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\SQL - Apply Type 1 overwrites" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{ED073E29-B55B-4919-8B4A-DE23FD55F4BF}"
+      DTS:From="Package\SQL - Apply Type 1 overwrites"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\SQL Row count and sanity check" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="188,42"
+          Id="Package\DFT Load stg customer"
+          TopLeft="155,117" />
+        <NodeLayout
+          Size="223,42"
+          Id="Package\DFT Load stg customer history"
+          TopLeft="137,201" />
+        <NodeLayout
+          Size="222,42"
+          Id="Package\SQL - Apply Type 1 overwrites"
+          TopLeft="128,494" />
+        <NodeLayout
+          Size="335,42"
+          Id="Package\SQL  Truncate stg customers and stg customer history"
+          TopLeft="106,7" />
+        <NodeLayout
+          Size="176,42"
+          Id="Package\SQL Insert dim_customer direct"
+          TopLeft="135,388" />
+        <NodeLayout
+          Size="233,42"
+          Id="Package\SQL Row count and sanity check"
+          TopLeft="117,598" />
+        <NodeLayout
+          Size="176,42"
+          Id="Package\SQL Validate staging"
+          TopLeft="135,286" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="273.5,49">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-24.5,68"
+              Start="0,0"
+              End="-24.5,60.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,30"
+                    Point2="0,34"
+                    Point3="-4,34" />
+                  <mssgle:LineSegment
+                    End="-20.5,34" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-20.5,34"
+                    Point2="-24.5,34"
+                    Point3="-24.5,38" />
+                  <mssgle:LineSegment
+                    End="-24.5,60.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="223,328">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="248.75,159">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42"
+              Start="0,0"
+              End="0,34.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="248.5,243">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-25.5,43"
+              Start="0,0"
+              End="-25.5,35.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.5"
+                    Point2="0,21.5"
+                    Point3="-4,21.5" />
+                  <mssgle:LineSegment
+                    End="-21.5,21.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-21.5,21.5"
+                    Point2="-25.5,21.5"
+                    Point3="-25.5,25.5" />
+                  <mssgle:LineSegment
+                    End="-25.5,35.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="223,430">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="16,64"
+              Start="0,0"
+              End="16,56.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28"
+                    Point2="0,32"
+                    Point3="4,32" />
+                  <mssgle:LineSegment
+                    End="12,32" />
+                  <mssgle:CubicBezierSegment
+                    Point1="12,32"
+                    Point2="16,32"
+                    Point3="16,36" />
+                  <mssgle:LineSegment
+                    End="16,56.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="236.25,536">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,62"
+              Start="0,0"
+              End="0,54.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,54.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DFT Load stg customer">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="171,42"
+          Id="Package\DFT Load stg customer\OLE DB Destination"
+          TopLeft="236,342" />
+        <NodeLayout
+          Size="154,42"
+          Id="Package\DFT Load stg customer\Derived Column"
+          TopLeft="247,215" />
+        <NodeLayout
+          Size="257,51"
+          Id="Package\DFT Load stg customer\Excel Source"
+          TopLeft="202.888888888889,92" />
+        <EdgeLayout
+          Id="Package\DFT Load stg customer.Paths[Excel Source Output]"
+          TopLeft="327.694444444445,143">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,72"
+              Start="0,0"
+              End="0,64.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,64.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT Load stg customer.Paths[Derived Column Output]"
+          TopLeft="322.75,257">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,85"
+              Start="0,0"
+              End="0,77.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,77.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT Load stg customer\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT Load stg customer\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DFT Load stg customer history">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="171,42"
+          Id="Package\DFT Load stg customer history\OLE DB Destination"
+          TopLeft="237,342" />
+        <NodeLayout
+          Size="154,42"
+          Id="Package\DFT Load stg customer history\Derived Column"
+          TopLeft="247,215" />
+        <NodeLayout
+          Size="257,51"
+          Id="Package\DFT Load stg customer history\Excel Source"
+          TopLeft="202.888888888889,92" />
+        <EdgeLayout
+          Id="Package\DFT Load stg customer history.Paths[Excel Source Output]"
+          TopLeft="327.694444444445,143">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,72"
+              Start="0,0"
+              End="0,64.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,64.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT Load stg customer history.Paths[Derived Column Output]"
+          TopLeft="323.25,257">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,85"
+              Start="0,0"
+              End="0,77.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,77.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT Load stg customer history\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT Load stg customer history\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
