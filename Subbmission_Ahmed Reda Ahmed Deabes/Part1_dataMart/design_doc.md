@@ -1,351 +1,196 @@
-# PortOps DataMart Design Document
+# PortOps Data Mart — Design Document
 
 ## 1. Architecture Overview
 
-The solution follows a layered data warehouse architecture:
+The solution follows a two-layer architecture:
 
-Source Layer (Excel Files)
-↓
-Staging Layer (PortOps_Staging)
-↓
-Data Mart Layer (PortOps_Mart)
-↓
-Reporting Layer (Power BI)
+```
+Source (Excel)
+    ↓ SSIS
+PortOps_Staging  (stg schema)
+    ↓ SSIS / SQL
+PortOps_Mart     (mart schema)
+    ↓ Power BI Import
+Dashboard (3 pages)
+```
 
-### Source Layer
-Raw operational Excel files:
-- Customers
-- Equipment
-- Vessel Calls
-- Container Movements
-- Gate Transactions
-- Shift Data
-- Terminal Data
-
-### Staging Layer
-Purpose:
-- Raw landing area
-- Preserve source structure
-- Initial validation
-- Metadata tracking
-
-Characteristics:
-- Minimal transformations
-- Raw datatypes mostly stored as text
-- Validation columns included
-
-Metadata columns:
-- load_batch_id
-- load_timestamp
-- source_file
-- is_valid
-- validation_message
-
-### Mart Layer
-Purpose:
-- Analytical model
-- Star schema design
-- Optimized for reporting
-
-Contains:
-Dimension tables:
-- dim_customer
-- dim_terminal
-- dim_equipment
-- dim_shift
-- dim_date
-
-Fact tables:
-- fact_vessel_call
-- fact_container_movement
-
+The staging layer acts as a raw landing zone — all columns are NVARCHAR to accept Excel output exactly as-is with no transformation. The mart layer contains fully typed, surrogate-keyed star-schema objects. All transformation logic runs between staging and mart.
 
 ---
 
 ## 2. Star Schema Design
 
-### Dimension Tables
+### Dimensions
 
-#### dim_customer
-Type: Slowly Changing Dimension Type 2
+| Table | SCD Type | Natural Key | Notes |
+|---|---|---|---|
+| dim_date | Static | date_key (YYYYMMDD INT) | Seeded in SQL, fiscal year starts 1 April |
+| dim_customer | Type 2 (tier, credit_limit) + Type 1 (name, code, country, active_flag) | customer_id | 16 rows for 12 customers (4 have 2 versions) |
+| dim_terminal | Type 1 | terminal_id | 4 rows |
+| dim_equipment | Type 1 | equipment_id | 12 rows |
+| dim_shift | Type 1 | shift_id | 3 rows (Day/Evening/Night) |
 
-Business key:
-customer_id
+### Facts
 
-Surrogate key:
-customer_sk
+| Table | Grain | Rows | Key Measures |
+|---|---|---|---|
+| fact_vessel_call | One per vessel call | ~1,076 | berth_delay_hours, stay_hours, moves_variance |
+| fact_container_movement | One per container move | ~90,541 | crane_cycle_seconds |
+| fact_gate_transaction | One per truck gate transaction | ~97,000 | truck_turnaround_minutes |
 
-Tracked attributes:
+### Unknown Member Convention
+Every dimension has a -1 surrogate key row with description "Unknown". All fact FKs that cannot resolve a dimension lookup default to -1. This preserves referential integrity without rejecting rows and allows analysis of unclassified records separately.
+
+---
+
+## 3. dim_date Design
+
+The date dimension covers 1 February 2025 to 31 May 2026 — a 60-day buffer beyond the reporting window on each side to handle edge cases (vessels with ETA before April or ATD after March).
+
+Fiscal year attributes follow the 1 April start convention:
+- FY2025 = 1 April 2025 to 31 March 2026
+- Fiscal Month 1 = April, Month 12 = March
+- Fiscal Quarter 1 = April–June
+
+The date_key is an integer in YYYYMMDD format (e.g. 20250401) rather than a DATE surrogate for two reasons: integer joins are faster than date joins in SQL Server, and YYYYMMDD integers are human-readable for debugging.
+
+---
+
+## 4. SCD Type 2 Implementation
+
+### Pattern Used
+Manual Lookup → Conditional Split → Multicast → expire + insert
+
+### Type 2 Attributes (versioned)
 - customer_tier
 - credit_limit
 
-Reason:
-Customer business attributes can change over time.
+### Type 1 Attributes (overwrite in place)
+- customer_name
+- customer_code
+- country
+- active_flag
 
-Historical tracking:
-- effective_from
-- effective_to
-- is_current
-- change_reason
+### Process Flow
+1. Source view (stg.vw_customer_scd_source) joins CustomerHistory and Customers sheets, converting all dates from either Excel serial float or ISO string format
+2. Lookup matches incoming rows against dim_customer WHERE is_current = 1
+3. No-match rows → insert as new customer (first-time load)
+4. Match rows → Conditional Split checks if customer_tier or credit_limit changed
+5. Changed rows → Multicast duplicates the stream:
+   - Path 1: OLE DB Command UPDATE sets effective_to = new_effective_from - 1 day, is_current = 0
+   - Path 2: OLE DB Destination INSERT creates new row with is_current = 1, effective_to = 9999-12-31
+6. After Data Flow: Execute SQL Task applies Type 1 overwrites to ALL rows for each customer
 
-
-#### dim_terminal
-Purpose:
-Terminal reference data
-
-
-#### dim_equipment
-Purpose:
-Equipment operational analysis
-
-
-#### dim_shift
-Purpose:
-Time segmentation for operations
-
-
-#### dim_date
-Purpose:
-Calendar intelligence and time analysis
-
+### Customers with 2 Versions (SCD2 Changes)
+- Customer 3 (CMA CGM): Gold → Platinum
+- Customer 6 (Evergreen): Silver → Gold
+- Customer 8 (ZIM): Silver → Bronze
+- Customer 11 (OOCL): Bronze → Silver
 
 ---
 
-## 3. SCD Strategy
+## 5. fact_gate_transaction — Dual Date FK Design
 
-### Why SCD Type 2 for Customer?
+This fact table has two date foreign keys:
 
-Customer tier and credit limit are historical business attributes.
+```
+gate_in_date_key  → dim_date[date_key]   ACTIVE relationship
+gate_out_date_key → dim_date[date_key]   INACTIVE relationship
+```
 
-Example:
-Customer A:
-2024 → Gold
-2025 → Platinum
+Power BI only allows one active relationship between any two tables. The inactive relationship is activated on-demand in DAX using USERELATIONSHIP():
 
-Business users need both states for trend analysis.
+```dax
+Gate-Outs Count =
+CALCULATE(
+    COUNTROWS(fact_gate_transaction),
+    USERELATIONSHIP(fact_gate_transaction[gate_out_date_key], dim_date[date_key])
+)
+```
 
-Implementation:
-1. Detect changes using Lookup
-2. Conditional Split for changed records
-3. Expire old version
-4. Insert new version
-
-Change detection attributes:
-- customer_tier
-- credit_limit
-
+Rows where gate_out_time is NULL (trucks still inside terminal) are assigned gate_out_date_key = -1 to preserve the row in the fact table without a broken FK reference.
 
 ---
 
-## 4. Data Quality Rules
+## 6. Data Quality Findings
 
-### Customer
+### Issue 1: move_date column entirely NULL
+Source: ContainerMovements sheet
+Impact: date_key for fact_container_movement could not be derived from move_date
+Resolution: date_key derived from move_start_time instead (CAST to DATE, formatted as YYYYMMDD)
 
-Rule:
-customer_id must exist
+### Issue 2: DateTime columns stored as strings not Excel serials
+Source: All sheets
+Impact: Serial-to-datetime conversion formula produced no results
+Resolution: All date conversion logic updated to CAST(... AS DATETIME2) for string inputs, with ISNUMERIC() branching to handle both formats
 
-Action:
-Invalid rows flagged
+### Issue 3: CustomerHistory dates mixed format
+Source: CustomerHistory sheet
+Impact: effective_from and effective_to in some rows were Excel serial floats, in others ISO date strings, and effective_to = '9999-12-31' as literal string
+Resolution: staging view (stg.vw_customer_scd_source) uses CASE WHEN ISNUMERIC() THEN serial conversion ELSE TRY_CAST AS DATE END
 
-
-Rule:
-credit_limit must be numeric
-
-Action:
-Invalid rows rejected
-
-
-### Vessel Calls
-
-Rule:
-ATA cannot be NULL
-
-Action:
-Mark invalid
-
-
-Rule:
-ATD must be >= ATA
-
-Action:
-Mark invalid
-
-
-### Container Movements
-
-Rule:
-move_end_time >= move_start_time
-
-Action:
-Mark invalid
-
-
-Rule:
-move date must exist
-
-Action:
-Mark invalid
-
+### Issue 4: transaction_type NULL in some gate transaction rows
+Source: GateTransactions sheet
+Resolution: Column mapping verified in OLE DB Destination Mappings tab. LTRIM(RTRIM()) applied in INSERT to clean whitespace.
 
 ---
 
-## 5. Error Handling Strategy
+## 7. SSIS Package Architecture
 
-All invalid records are written into:
+```
+pkg_master.dtsx
+├── SCR - Generate BatchId
+├── EPT - pkg_dim_terminal
+├── EPT - pkg_dim_equipment
+├── EPT - pkg_dim_shift
+├── EPT - pkg_dim_customer      ← SCD Type 2
+├── EPT - pkg_fact_vessel_call
+├── EPT - pkg_fact_container_movement
+└── EPT - pkg_fact_gate_transaction
+```
 
-error_table
+All packages are connected with Success precedence constraints. Dimensions always load before facts. The BatchId script task generates a unique integer for each master run by querying MAX(batch_id) + 1 from audit_log.
 
-Captured attributes:
-- batch_id
-- package_name
-- source_table
-- error_description
-- raw_row
-
-Purpose:
-- Auditability
-- Debugging
-- Data quality tracking
-
-
----
-
-## 6. Date Handling
-
-Source system uses Excel serial dates.
-
-Transformation logic:
-Excel serial → SQL date/datetime
-
-Formula:
-DATEADD(day, serial_number - 2, '1900-01-01')
-
-Reason:
-Excel stores dates as numeric serials.
-
+### Control Flow Pattern (each fact package)
+```
+SQL - Truncate stg.*
+    ↓
+SQL - Truncate mart.fact_*
+    ↓
+DFT - Load stg.* from Excel
+    ↓
+SQL - INSERT into mart fact table
+```
 
 ---
 
-## 7. Surrogate Key Strategy
+## 8. Scalability Trade-offs
 
-All dimensions use surrogate keys.
+### Current Approach (suitable for assessment)
+- Full truncate and reload on every run
+- Single-threaded SSIS execution
+- No partitioning on fact tables
+- File-based Excel source
 
-Reason:
-- Performance
-- Historical tracking
-- Decoupling source keys
-
-
-Unknown members:
--1
-
-Used when:
-Dimension lookup fails.
-
-
----
-
-## 8. Fact Table Design
-
-### fact_vessel_call
-
-Grain:
-One row per vessel call
-
-Measures:
-- berth_delay_hours
-- stay_hours
-- total_moves_planned
-- total_moves_actual
-- moves_variance
-
-
-### fact_container_movement
-
-Grain:
-One row per container movement
-
-Measures:
-- crane_cycle_seconds
-
+### Production Recommendations
+- Incremental loads using watermark columns to avoid full reprocessing
+- Partition switching on fact_container_movement (largest table, will grow quickly)
+- Migrate source from Excel to SQL database or API to remove file-locking risks
+- Parallel fact package execution (packages 5-7 have no interdependencies and could run concurrently)
+- Add columnstore indexes on fact tables for analytical query performance
+- Implement proper error alerting via SQL Server Agent job notifications
 
 ---
 
-## 9. ETL Flow Design
+## 9. Power BI Model Design
 
-Step 1:
-Extract from Excel
+### Import vs DirectQuery
+Import mode was chosen for performance. At ~190,000 fact rows the dataset fits comfortably in memory and Import allows VertiPaq compression to reduce model size significantly.
 
-Step 2:
-Load into staging
+### Relationship Architecture
+12 relationships total — all Many-to-One from fact to dimension, single-direction cross-filter. The one exception is fact_gate_transaction which has two relationships to dim_date (active + inactive as described above).
 
-Step 3:
-Validate staging
-
-Step 4:
-Load dimensions
-
-Step 5:
-Load facts
-
-Step 6:
-Power BI reporting
-
-
----
-
-## 10. Trade-offs
-
-Decision:
-Use staging raw datatypes as NVARCHAR
-
-Advantage:
-Flexible ingestion
-
-Trade-off:
-Transformation complexity
-
-
-Decision:
-Use SCD2 only for customer
-
-Advantage:
-Preserve business history
-
-Trade-off:
-Larger dimension table
-
-
-Decision:
-Unknown surrogate key = -1
-
-Advantage:
-Prevent load failure
-
-Trade-off:
-Requires cleanup analysis
-
-
----
-
-## 11. Performance Considerations
-
-Implemented:
-- Lookup cache
-- Set-based SQL loads
-- Indexed surrogate keys
-
-Future improvements:
-- Incremental loads
-- Partitioning
-- CDC
-
-
----
-
-## 12. Assumptions
-
-- Excel files are the source of truth
-- Business keys are stable
-- Historical customer changes are required
-- Date serial format follows Excel standard
+### DAX Measure Design Principles
+- All measures use DIVIDE() instead of division operator to handle divide-by-zero gracefully
+- FILTER() used instead of WHERE for semi-additive measures to preserve filter context
+- Time intelligence measures (YoY, rolling average) rely on dim_date being marked as date table
